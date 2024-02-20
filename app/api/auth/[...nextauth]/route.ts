@@ -1,12 +1,12 @@
-import NextAuth from 'next-auth';
+import NextAuth, { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient, User, Account } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
@@ -19,6 +19,10 @@ const handler = NextAuth({
     }),
   ],
   callbacks: {
+    async session({session, user}) {
+      session.user.troopId = user.troopId;
+      return session;
+    },
     async signIn(params) {
       const { user, account } = params;
       // Check if the user exists in the database
@@ -56,6 +60,9 @@ const handler = NextAuth({
       return false;
     },
   },
-})
+
+}
+
+const handler = NextAuth(authOptions)
 
 export { handler as GET, handler as POST}
