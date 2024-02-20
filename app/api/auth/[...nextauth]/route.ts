@@ -2,7 +2,7 @@ import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import GithubProvider from 'next-auth/providers/github';
 import { PrismaAdapter } from '@next-auth/prisma-adapter';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, User, Account } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -18,9 +18,44 @@ const handler = NextAuth({
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string
     }),
   ],
-  // pages: {
-  //   signIn: '/signin',
-  // },
+  callbacks: {
+    async signIn(params) {
+      const { user, account } = params;
+      // Check if the user exists in the database
+      const existingUser = await prisma.user.findUnique({
+        where: {
+          email: user.email as string,
+        },
+      });
+
+      if (existingUser && account) {
+        // Check if there is an account with the specified provider for the user
+        const existingAccount = await prisma.account.findFirst({
+          where: {
+            userId: existingUser.id,
+            provider: account.provider,
+          },
+        });
+
+        if (!existingAccount) {
+          // If the account doesn't exist, create one and return true to sign in the user
+          await prisma.account.create({
+            data: {
+              userId: existingUser.id,
+              provider: account.provider,
+              type: account.type,
+              providerAccountId: account.providerAccountId,
+            },
+          });
+        }
+
+        return true;
+      }
+
+      // If the user does not exist, return false to prevent sign-in
+      return false;
+    },
+  },
 })
 
 export { handler as GET, handler as POST}

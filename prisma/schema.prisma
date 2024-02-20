@@ -11,13 +11,14 @@ datasource db {
 }
 
 model Troop {
-  id            String         @id @default(cuid())
-  name          String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  events        Event[]
-  announcements Announcement[]
-  User          User[]
+  id               String             @id @default(cuid())
+  name             String
+  createdAt        DateTime           @default(now())
+  updatedAt        DateTime           @updatedAt
+  events           Event[]
+  announcements    Announcement[]
+  User             User[]
+  WhitelistedEmail WhitelistedEmail[]
 }
 
 model Event {
@@ -75,13 +76,20 @@ model User {
   email         String?   @unique
   emailVerified DateTime?
   image         String?
-  troop         Troop?    @relation(fields: [troopId], references: [id])
-  troopId       String?
+  troop         Troop     @relation(fields: [troopId], references: [id])
+  troopId       String
   accounts      Account[]
   sessions      Session[]
   fatherId      String?   @map("father_id")
   father        User?     @relation("FatherSon", fields: [fatherId], references: [id])
   sons          User[]    @relation("FatherSon")
+}
+
+model WhitelistedEmail {
+  id      String @id @default(cuid())
+  email   String @unique
+  troopId String
+  troop   Troop  @relation(fields: [troopId], references: [id])
 }
 
 model VerificationToken {
