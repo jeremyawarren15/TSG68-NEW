@@ -10,7 +10,7 @@ export async function getTroops() {
 export async function getTroop(id: string) {
   const troop = await prisma.troop.findUnique({
     where: {
-      id: parseInt(id)
+      id: id
     },
   });
 
