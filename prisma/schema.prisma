@@ -74,6 +74,11 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String?   @unique
+  phoneNumber   String?
+  addressId     String?   @map("address_id")
+  address       Address?  @relation(fields: [addressId], references: [id])
+  parishId      String?   @map("parish_id")
+  parish        Parish?   @relation(fields: [parishId], references: [id])
   emailVerified DateTime?
   image         String?
   troop         Troop     @relation(fields: [troopId], references: [id])
@@ -83,6 +88,22 @@ model User {
   fatherId      String?   @map("father_id")
   father        User?     @relation("FatherSon", fields: [fatherId], references: [id])
   sons          User[]    @relation("FatherSon")
+}
+
+model Address {
+  id      String @id @default(cuid())
+  street  String
+  city    String
+  state   String
+  zip     String
+  country String
+  User    User[]
+}
+
+model Parish {
+  id           String @id @default(cuid())
+  name         String
+  parishioners User[]
 }
 
 model WhitelistedEmail {
