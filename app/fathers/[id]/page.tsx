@@ -1,5 +1,5 @@
 import { authOptions } from "@/app/api/auth/[...nextauth]/route";
-import prisma from "@/prisma/prisma";
+import { prisma } from "@/prisma/prisma";
 import { getServerSession } from "next-auth";
 
 async function getFather(id: string) {

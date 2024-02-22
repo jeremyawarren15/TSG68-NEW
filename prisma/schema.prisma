@@ -75,19 +75,23 @@ model User {
   name          String?
   email         String?   @unique
   phoneNumber   String?
+  emailVerified DateTime?
+  image         String?
+  role          Role      @default(USER)
+  rank          Rank?
+  isBoardMember Boolean   @default(false)
+  birthdate     DateTime?
+  troopId       String
+  troop         Troop     @relation(fields: [troopId], references: [id])
   addressId     String?   @map("address_id")
   address       Address?  @relation(fields: [addressId], references: [id])
   parishId      String?   @map("parish_id")
   parish        Parish?   @relation(fields: [parishId], references: [id])
-  emailVerified DateTime?
-  image         String?
-  troop         Troop     @relation(fields: [troopId], references: [id])
-  troopId       String
-  accounts      Account[]
-  sessions      Session[]
   fatherId      String?   @map("father_id")
   father        User?     @relation("FatherSon", fields: [fatherId], references: [id])
   sons          User[]    @relation("FatherSon")
+  accounts      Account[]
+  sessions      Session[]
 }
 
 model Address {
@@ -119,4 +123,16 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
+enum Rank {
+  CAPTAIN
+  FIRST_LIEUTENANT
+  SECOND_LIEUTENANT
 }
