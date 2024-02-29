@@ -8,6 +8,14 @@ type EventTableItem = {
 }
 
 export default async function EventsTable({events}: {events: EventTableItem[]}) {
+  if (!events.length) {
+    return (
+      <div className="p-4">
+        <p>No events yet.</p>
+      </div>
+    )
+  }
+
   return (
     <table className="table">
       <thead className="text-neutral-content">
