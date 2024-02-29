@@ -11,14 +11,13 @@ datasource db {
 }
 
 model Troop {
-  id               String             @id @default(cuid())
-  name             String
-  createdAt        DateTime           @default(now())
-  updatedAt        DateTime           @updatedAt
-  events           Event[]
-  announcements    Announcement[]
-  User             User[]
-  WhitelistedEmail WhitelistedEmail[]
+  id            String         @id @default(cuid())
+  name          String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  events        Event[]
+  announcements Announcement[]
+  User          User[]
 }
 
 model Event {
@@ -108,13 +107,6 @@ model Parish {
   id           String @id @default(cuid())
   name         String
   parishioners User[]
-}
-
-model WhitelistedEmail {
-  id      String @id @default(cuid())
-  email   String @unique
-  troopId String
-  troop   Troop  @relation(fields: [troopId], references: [id])
 }
 
 model VerificationToken {
