@@ -22,15 +22,15 @@ model Troop {
 }
 
 model Event {
-  id        String    @id @default(cuid())
+  id        String   @id @default(cuid())
   name      String
-  content   String    @db.Text
-  startdate DateTime
-  enddate   DateTime?
+  content   String   @db.Text
+  startDate DateTime
+  endDate   DateTime
   troopId   String
-  troop     Troop     @relation(fields: [troopId], references: [id])
-  createdAt DateTime  @default(now())
-  updatedAt DateTime  @updatedAt
+  troop     Troop    @relation(fields: [troopId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Announcement {
