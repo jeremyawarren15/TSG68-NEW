@@ -3,8 +3,8 @@ import Link from "next/link";
 type EventTableItem = {
   id: string;
   name: string;
-  startdate: Date;
-  enddate: Date | null;
+  startDate: Date;
+  endDate: Date;
 }
 
 export default async function EventsTable({events}: {events: EventTableItem[]}) {
@@ -21,8 +21,8 @@ export default async function EventsTable({events}: {events: EventTableItem[]}) 
         {events.map((event) => (
           <tr key={event.id}>
             <td className="font-bold"><Link href={"events/" + event.id}>{event.name}</Link></td>
-            <td>{event.startdate.toDateString()}</td>
-            <td>{event.enddate?.toDateString()}</td>
+            <td>{event.startDate.toDateString()}</td>
+            <td>{event.endDate.toDateString()}</td>
           </tr>
         ))}
       </tbody>

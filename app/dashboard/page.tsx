@@ -20,12 +20,12 @@ async function getEvents() {
   return await prisma.event.findMany({
     where: {
       troopId: session.user.troopId,
-      startdate: {
+      startDate: {
         gt: currentDate
       }
     },
     orderBy: {
-      startdate: Prisma.SortOrder.asc
+      startDate: Prisma.SortOrder.asc
     },
     take: 5
   })
