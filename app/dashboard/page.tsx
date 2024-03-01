@@ -3,6 +3,7 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
 import EventsTable from "./EventsTable";
 import { Prisma } from "@prisma/client";
+import Link from "next/link";
 
 async function getSession() {
   const session = await getServerSession(authOptions);
@@ -42,14 +43,18 @@ export default async function DashboardPage() {
     <div className="grid grid-cols-3 gap-6">
       <section className="col-span-2">
         <div className="mb-4">
-          <h2 className="text-neutral-content font-bold text-lg mb-4">Events</h2>
+          <Link href="/events">
+            <h2 className="text-base-content font-bold text-lg mb-4">Events</h2>
+          </Link>
           <div className="bg-base-300 shadow rounded-md">
             <EventsTable events={events} />
           </div>
         </div>
 
         <div>
-          <h2 className="text-neutral-content font-bold text-lg mb-4">Announcements</h2>
+          <Link href="/announcements">
+            <h2 className="text-base-content font-bold text-lg mb-4">Announcements</h2>
+          </Link>
           <div className="bg-base-300 shadow rounded-md">
             <div className="p-4">
               <p>No announcements yet.</p>

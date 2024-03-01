@@ -10,7 +10,7 @@ type EventTableItem = {
 export default async function EventsTable({events}: {events: EventTableItem[]}) {
   if (!events.length) {
     return (
-      <div className="p-4">
+      <div className="p-4 text-base-content">
         <p>No events yet.</p>
       </div>
     )
@@ -18,7 +18,7 @@ export default async function EventsTable({events}: {events: EventTableItem[]}) 
 
   return (
     <table className="table">
-      <thead className="text-neutral-content">
+      <thead className="text-base-content">
         <tr>
           <th>Name</th>
           <th>Start Date</th>

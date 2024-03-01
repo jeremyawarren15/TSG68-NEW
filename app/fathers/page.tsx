@@ -1,8 +1,6 @@
 import { prisma } from "@/prisma/prisma"
-import Link from "next/link";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth";
-import { Sonsie_One } from "next/font/google";
 
 async function getFathers() {
   const session = await getServerSession(authOptions);
@@ -42,7 +40,6 @@ export default async function FatherListPage() {
       <h1>Fathers</h1>
       <div className="overflow-x-auto">
       <table className="table">
-        {/* head */}
         <thead>
           <tr>
             <th>Name</th>
