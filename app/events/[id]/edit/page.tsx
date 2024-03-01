@@ -1,49 +1,32 @@
-import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import Tiptap from "@/app/components/TipTap";
 import { prisma } from "@/prisma/prisma"
-import { getServerSession } from "next-auth";
+import { getEvent } from "@/app/actions";
+import { redirect } from "next/navigation";
 
-async function getEvent(eventId: string) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
-  }
-
-  const event = await prisma.event.findUnique({
+async function saveEvent(formData: FormData) {
+  'use server'
+  const event = await prisma.event.update({
     where: {
-      id: eventId,
-      troopId: session.user.troopId
+      id: formData.get('id') as string
+    },
+    data: {
+      name: formData.get('name') as string,
+      content: formData.get('content') as string
     }
   })
 
-  if (!event) {
-    throw new Error("Event not found.");
-  }
-
-  return event;
+  redirect(`/events/${event.id}`);
 }
 
 export default async function EventEditPage({params}: { params: { id: string}}) {
   const event = await getEvent(params.id);
-
-  const saveEvent = async (formData: FormData) => {
-    'use server'
-    const event = await prisma.event.update({
-      where: {
-        id: params.id
-      },
-      data: {
-        name: formData.get('name') as string,
-        content: formData.get('content') as string
-      }
-    })
-  }
 
   return (
     <form action={saveEvent}>
       <div className="label">
         <span className="label-text">Title</span>
       </div>
+      <input name="id" type="hidden" value={event.id} />
       <input name="name" type="text" defaultValue={event.name} className="input input-bordered w-full max-w-xs" />
       <div className="divider" />
       <Tiptap content={event.content} />

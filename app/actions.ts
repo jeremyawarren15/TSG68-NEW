@@ -1,5 +1,7 @@
 import { notFound } from "next/navigation";
 import { PrismaClient } from "@prisma/client";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const prisma = new PrismaClient();
 
@@ -19,4 +21,24 @@ export async function getTroop(id: string) {
   }
 
   return troop;
+}
+
+export async function getEvent(eventId: string) {
+  const session = await getServerSession(authOptions);
+  if (!session) {
+    throw new Error("You need to be authenticated to view this page.");
+  }
+
+  const event = await prisma.event.findUnique({
+    where: {
+      id: eventId,
+      troopId: session.user.troopId
+    }
+  })
+
+  if (!event) {
+    throw new Error("Event not found.");
+  }
+
+  return event;
 }
