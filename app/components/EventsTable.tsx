@@ -1,5 +1,5 @@
 import Link from "next/link";
-import DateDisplay from "../components/DateDisplay";
+import DateDisplay from "./DateDisplay";
 
 type EventTableItem = {
   id: string;

@@ -1,9 +1,10 @@
 import { prisma } from "@/prisma/prisma"
 import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
-import EventsTable from "./EventsTable";
+import EventsTable from "@/app/components/EventsTable";
 import { Prisma } from "@prisma/client";
 import Link from "next/link";
+import Heading from "../components/Heading";
 
 async function getSession() {
   const session = await getServerSession(authOptions);
@@ -43,18 +44,18 @@ export default async function DashboardPage() {
     <>
       <div className="mb-4">
         <Link href="/events">
-          <h2 className="text-base-content font-bold text-lg mb-4">Events</h2>
+          <Heading>Events</Heading>
         </Link>
-        <div className="bg-base-300 shadow rounded-md">
+        <div className="bg-base-200 shadow rounded-md">
           <EventsTable events={events} />
         </div>
       </div>
 
       <div>
         <Link href="/announcements">
-          <h2 className="text-base-content font-bold text-lg mb-4">Announcements</h2>
+          <Heading>Announcements</Heading>
         </Link>
-        <div className="bg-base-300 shadow rounded-md">
+        <div className="bg-base-200 shadow rounded-md">
           <div className="p-4">
             <p>No announcements yet.</p>
           </div>

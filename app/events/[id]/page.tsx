@@ -1,3 +1,4 @@
+import Heading from "@/app/components/Heading";
 import { authOptions } from "@/lib/authOptions";
 import { prisma } from "@/prisma/prisma"
 import { marked } from "marked";
@@ -29,7 +30,7 @@ export default async function EventPage({params}: { params: { id: string } }) {
   return (
     <div>
       <div className="flex gap-2">
-        <h1 className="font-bold text-4xl">{event.name}</h1>
+        <Heading>{event.name}</Heading>
         <Link href={`/events/${params.id}/edit`}>
           <button className="btn btn-link">Edit</button>
         </Link>
