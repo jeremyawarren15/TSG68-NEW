@@ -1,5 +1,5 @@
 import { prisma } from "@/prisma/prisma"
-import { authOptions } from "../api/auth/[...nextauth]/route";
+import { authOptions } from "@/lib/authOptions";
 import { getServerSession } from "next-auth";
 
 async function getFathers() {
@@ -56,7 +56,7 @@ export default async function FatherListPage() {
                 <div className="flex items-center gap-3">
                   <div className="avatar">
                     <div className="mask mask-squircle w-12 h-12">
-                      <img src={father.image} alt="Avatar Tailwind CSS Component" />
+                      {/* <img src={father.image} alt="Avatar Tailwind CSS Component" /> */}
                     </div>
                   </div>
                   <div>

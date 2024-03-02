@@ -1,4 +1,5 @@
 import Link from "next/link";
+import DateDisplay from "../components/DateDisplay";
 
 type EventTableItem = {
   id: string;
@@ -29,8 +30,8 @@ export default async function EventsTable({events}: {events: EventTableItem[]}) 
         {events.map((event) => (
           <tr key={event.id}>
             <td className="font-bold"><Link href={"events/" + event.id}>{event.name}</Link></td>
-            <td>{event.startDate.toDateString()}</td>
-            <td>{event.endDate.toDateString()}</td>
+            <td><DateDisplay date={event.startDate} /></td>
+            <td><DateDisplay date={event.endDate} /></td>
           </tr>
         ))}
       </tbody>

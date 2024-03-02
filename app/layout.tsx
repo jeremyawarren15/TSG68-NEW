@@ -30,6 +30,7 @@ export default function RootLayout({
     { href: "/events", name: "Events" },
     { href: "/fathers", name: "Fathers" },
     { href: "/cadets", name: "Cadets" },
+    { href: "/profile", name: "Profile" },
   ]
 
   const renderSidebarItems = () => {
