@@ -16,7 +16,7 @@ const config: Config = {
   daisyui: {
     themes: [
       {
-        mytheme: {
+        tsg: {
           "primary": "#d10a1b",
           "secondary": "#6C7D47",
           "accent": "#A9B294",

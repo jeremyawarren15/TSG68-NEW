@@ -40,36 +40,26 @@ async function getAnnouncements() {
 export default async function DashboardPage() {
   const events = await getEvents();
   return (
-    <div className="grid grid-cols-3 gap-6">
-      <section className="col-span-2">
-        <div className="mb-4">
-          <Link href="/events">
-            <h2 className="text-base-content font-bold text-lg mb-4">Events</h2>
-          </Link>
-          <div className="bg-base-300 shadow rounded-md">
-            <EventsTable events={events} />
+    <>
+      <div className="mb-4">
+        <Link href="/events">
+          <h2 className="text-base-content font-bold text-lg mb-4">Events</h2>
+        </Link>
+        <div className="bg-base-300 shadow rounded-md">
+          <EventsTable events={events} />
+        </div>
+      </div>
+
+      <div>
+        <Link href="/announcements">
+          <h2 className="text-base-content font-bold text-lg mb-4">Announcements</h2>
+        </Link>
+        <div className="bg-base-300 shadow rounded-md">
+          <div className="p-4">
+            <p>No announcements yet.</p>
           </div>
         </div>
-
-        <div>
-          <Link href="/announcements">
-            <h2 className="text-base-content font-bold text-lg mb-4">Announcements</h2>
-          </Link>
-          <div className="bg-base-300 shadow rounded-md">
-            <div className="p-4">
-              <p>No announcements yet.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section className="col-span-1">
-        <ul className="menu">
-          <li><a>Your Profile</a></li>
-          <li><a>Troop Information</a></li>
-          <li><a>FAQ</a></li>
-        </ul>
-      </section>
-    </div>
+      </div>
+    </>
   )
 }

@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "@/app/components/Providers";
 import Header from "./components/Header";
+import Link from "next/link";
+import MobileSidebar from "./components/MobileSidebar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -16,14 +18,60 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const closeSidebar = () => {
+    const drawerCheckbox = document.getElementById('my-drawer-3') as HTMLInputElement;
+    if (drawerCheckbox) {
+      drawerCheckbox.checked = false;
+    }
+  };
+
+  const sidebarItems = [
+    { href: "/dashboard", name: "Dashboard" },
+    { href: "/events", name: "Events" },
+    { href: "/fathers", name: "Fathers" },
+    { href: "/cadets", name: "Cadets" },
+  ]
+
+  const renderSidebarItems = () => {
+    return sidebarItems.map((item, index) => (
+      <li key={index}>
+        <Link href={item.href}>{item.name}</Link>
+      </li>
+    ))
+  }
+
   return (
-    <html lang="en" data-theme="mytheme">
+    <html lang="en" data-theme="tsg">
       <body className={inter.className}>
         <Provider>
-          <Header />
-          <main className="container py-4">
-            {children}
-          </main>
+          <div className="drawer">
+            <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content flex flex-col">
+              {/* Navbar */}
+              <div className="w-full navbar bg-primary text-primary-content">
+                <div className="flex-none lg:hidden">
+                  <label htmlFor="my-drawer-3" aria-label="open sidebar" className="btn btn-square btn-ghost">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" className="inline-block w-6 h-6 stroke-current"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                  </label>
+                </div>
+                <div className="flex-1 px-2 mx-2">Troop 68</div>
+              </div>
+              <div className="flex">
+                <div className="hidden lg:block" style={{minHeight: 'calc(100vh - 4rem)'}}>
+                  <ul className="menu p-4 w-80 min-h-full bg-base-200">
+                    {renderSidebarItems()}
+                  </ul>
+                </div>
+                <div className="flex-1 overflow-auto p-4">
+                  {children}
+                </div>
+              </div>
+            </div>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
+              <MobileSidebar drawerId="my-drawer-3" items={sidebarItems} />
+            </div>
+          </div>
         </Provider>
       </body>
     </html>
