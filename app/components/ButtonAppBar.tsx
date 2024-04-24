@@ -10,7 +10,6 @@ import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import {
   Drawer,
-  Divider,
   List,
   ListItem,
   ListItemButton,
@@ -19,6 +18,8 @@ import {
   ClickAwayListener,
 } from '@mui/material';
 import { Dashboard, Help, Inbox, Mail } from '@mui/icons-material';
+import { signIn, useSession } from 'next-auth/react';
+import SigninButton from './SignInButton';
 
 interface DrawerListItem {
   name: string;
@@ -27,6 +28,7 @@ interface DrawerListItem {
 
 export default function ButtonAppBar() {
   const [open, setOpen] = useState(false);
+  const { data: session, status } = useSession();
 
   const list: DrawerListItem[] = [
     { name: 'Dashboard', icon: <Dashboard /> },
@@ -66,7 +68,7 @@ export default function ButtonAppBar() {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
               Troop 68
             </Typography>
-            <Button color="inherit">Login</Button>
+            <SigninButton />
           </Toolbar>
         </AppBar>
       </Box>

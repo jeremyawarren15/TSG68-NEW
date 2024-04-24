@@ -1,4 +1,5 @@
 'use client';
+import { Button } from '@mui/material';
 import { useSession } from 'next-auth/react';
 import { signIn, signOut } from 'next-auth/react';
 
@@ -14,7 +15,9 @@ const SigninButton = () => {
   };
 
   return (
-    <button onClick={handleAuth}>{session ? 'Sign Out' : 'Sign In'}</button>
+    <Button color="inherit" onClick={handleAuth}>
+      {session ? 'Sign Out' : 'Sign In'}
+    </Button>
   );
 };
 

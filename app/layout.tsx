@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Container, CssBaseline } from '@mui/material';
 import ButtonAppBar from './components/ButtonAppBar';
+import Provider from './components/Providers';
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -13,7 +14,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <>
+    <Provider>
       <CssBaseline />
       <html lang="en">
         <body>
@@ -21,6 +22,6 @@ export default function RootLayout({
           <Container>{children}</Container>
         </body>
       </html>
-    </>
+    </Provider>
   );
 }
