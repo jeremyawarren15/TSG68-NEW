@@ -1,27 +1,25 @@
-import { prisma } from "@/prisma/prisma"
-import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
-import Heading from "../components/Heading";
+import { prisma } from '@/prisma/prisma';
+import { authOptions } from '@/lib/authOptions';
+import { getServerSession } from 'next-auth';
+import Heading from '../components/Heading';
 
 async function getFathers() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
+    throw new Error('You need to be authenticated to view this page.');
   }
 
-  const fathers = await prisma.user.findMany(
-    {
-      where: {
-        fatherId: null,
-        troopId: session.user.troopId
-      },
-      include: {
-        sons: true,
-        parish: true
-      }
-    }
-  );
+  const fathers = await prisma.user.findMany({
+    where: {
+      fatherId: null,
+      troopId: session.user.troopId,
+    },
+    include: {
+      sons: true,
+      parish: true,
+    },
+  });
   return fathers;
 }
 
@@ -31,10 +29,10 @@ export default async function FatherListPage() {
   const formattedRank = (rank: string | null): string => {
     if (!rank) return '';
     return rank
-    .split('_')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-  }
+      .split('_')
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
+      .join(' ');
+  };
 
   return (
     <>
@@ -62,13 +60,15 @@ export default async function FatherListPage() {
                     </div>
                     <div>
                       <div className="font-bold">{father.name}</div>
-                      <div className="text-sm opacity-50">{formattedRank(father.rank)}</div>
+                      <div className="text-sm opacity-50">
+                        {formattedRank(father.rank)}
+                      </div>
                     </div>
                   </div>
                 </td>
                 <td>
                   {father.phoneNumber}
-                  <br/>
+                  <br />
                   {father.email}
                 </td>
                 <td>{father.parish?.name}</td>
@@ -82,5 +82,5 @@ export default async function FatherListPage() {
         </table>
       </div>
     </>
-  )
+  );
 }

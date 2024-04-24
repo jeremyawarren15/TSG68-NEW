@@ -1,15 +1,15 @@
-import { prisma } from "@/prisma/prisma"
-import { authOptions } from "@/lib/authOptions";
-import { getServerSession } from "next-auth";
-import EventsTable from "@/app/components/EventsTable";
-import { Prisma } from "@prisma/client";
-import Link from "next/link";
-import Heading from "../components/Heading";
+import { prisma } from '@/prisma/prisma';
+import { authOptions } from '@/lib/authOptions';
+import { getServerSession } from 'next-auth';
+import EventsTable from '@/app/components/EventsTable';
+import { Prisma } from '@prisma/client';
+import Link from 'next/link';
+import Heading from '../components/Heading';
 
 async function getSession() {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
+    throw new Error('You need to be authenticated to view this page.');
   }
   return session;
 }
@@ -23,19 +23,19 @@ async function getEvents() {
     where: {
       troopId: session.user.troopId,
       startDate: {
-        gt: currentDate
-      }
+        gt: currentDate,
+      },
     },
     orderBy: {
-      startDate: Prisma.SortOrder.asc
+      startDate: Prisma.SortOrder.asc,
     },
-    take: 5
-  })
+    take: 5,
+  });
 }
 
 async function getAnnouncements() {
   const session = await getSession();
-  const getAnnouncements = await prisma.announcement
+  const getAnnouncements = await prisma.announcement;
 }
 
 export default async function DashboardPage() {
@@ -62,5 +62,5 @@ export default async function DashboardPage() {
         </div>
       </div>
     </>
-  )
+  );
 }

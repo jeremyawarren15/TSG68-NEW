@@ -1,24 +1,24 @@
-import { authOptions } from "@/lib/authOptions";
-import { prisma } from "@/prisma/prisma";
-import { getServerSession } from "next-auth";
+import { authOptions } from '@/lib/authOptions';
+import { prisma } from '@/prisma/prisma';
+import { getServerSession } from 'next-auth';
 
 async function getFather(id: string) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
+    throw new Error('You need to be authenticated to view this page.');
   }
 
   const father = await prisma.user.findFirst({
     where: { id: id },
-    include: { sons: true }
-  })
+    include: { sons: true },
+  });
 
   if (!father) {
-    throw new Error("Father not found.");
+    throw new Error('Father not found.');
   }
 
   if (session.user.troopId !== father.troopId) {
-    throw new Error("You are not authorized to view this page.");
+    throw new Error('You are not authorized to view this page.');
   }
 
   return father;
@@ -27,10 +27,10 @@ async function getFather(id: string) {
 interface Params {
   params: {
     id: string;
-  }
+  };
 }
 
-export default async function FatherDetailPage({params: {id}}: Params) {
+export default async function FatherDetailPage({ params: { id } }: Params) {
   const father = await getFather(id);
 
   return (

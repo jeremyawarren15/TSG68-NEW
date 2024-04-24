@@ -1,31 +1,35 @@
-import Heading from "@/app/components/Heading";
-import { authOptions } from "@/lib/authOptions";
-import { prisma } from "@/prisma/prisma"
-import { marked } from "marked";
-import { getServerSession } from "next-auth";
-import Link from "next/link";
+import Heading from '@/app/components/Heading';
+import { authOptions } from '@/lib/authOptions';
+import { prisma } from '@/prisma/prisma';
+import { marked } from 'marked';
+import { getServerSession } from 'next-auth';
+import Link from 'next/link';
 
 async function getEvent(eventId: string) {
   const session = await getServerSession(authOptions);
   if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
+    throw new Error('You need to be authenticated to view this page.');
   }
 
   const event = await prisma.event.findUnique({
     where: {
       id: eventId,
-      troopId: session.user.troopId
-    }
-  })
+      troopId: session.user.troopId,
+    },
+  });
 
   if (!event) {
-    throw new Error("Event not found.");
+    throw new Error('Event not found.');
   }
 
   return event;
 }
 
-export default async function EventPage({params}: { params: { id: string } }) {
+export default async function EventPage({
+  params,
+}: {
+  params: { id: string };
+}) {
   const event = await getEvent(params.id);
   return (
     <div>
@@ -37,8 +41,8 @@ export default async function EventPage({params}: { params: { id: string } }) {
       </div>
       <div className="divider" />
       <div className="prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl">
-        <div dangerouslySetInnerHTML={{__html: marked(event.content)}}></div>
+        <div dangerouslySetInnerHTML={{ __html: marked(event.content) }}></div>
       </div>
     </div>
-  )
+  );
 }

@@ -1,6 +1,6 @@
-'use client'
-import { useSession } from "next-auth/react";
-import { signIn, signOut } from "next-auth/react";
+'use client';
+import { useSession } from 'next-auth/react';
+import { signIn, signOut } from 'next-auth/react';
 
 const SigninButton = () => {
   const { data: session } = useSession();
@@ -14,10 +14,8 @@ const SigninButton = () => {
   };
 
   return (
-    <button onClick={handleAuth}>
-      {session ? 'Sign Out' : 'Sign In'}
-    </button>
+    <button onClick={handleAuth}>{session ? 'Sign Out' : 'Sign In'}</button>
   );
-}
+};
 
 export default SigninButton;

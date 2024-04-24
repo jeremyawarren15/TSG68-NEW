@@ -1,19 +1,19 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/authOptions";
-import { prisma } from "@/prisma/prisma";
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/authOptions';
+import { prisma } from '@/prisma/prisma';
 
 async function getMembers() {
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    throw new Error("You need to be authenticated to view this page.");
+    throw new Error('You need to be authenticated to view this page.');
   }
 
   return prisma.user.findMany({
     where: {
-      troopId: session.user.troopId
-    }
-  })
+      troopId: session.user.troopId,
+    },
+  });
 }
 
 export default async function MembersPage() {
@@ -27,6 +27,5 @@ export default async function MembersPage() {
         ))}
       </ul>
     </>
-
-  )
+  );
 }
