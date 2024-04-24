@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Provider from "@/app/components/Providers";
-import Header from "./components/Header";
 import Link from "next/link";
 import MobileSidebar from "./components/MobileSidebar";
 
