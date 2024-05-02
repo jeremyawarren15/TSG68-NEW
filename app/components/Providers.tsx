@@ -4,6 +4,14 @@ import { ThemeProvider, createTheme, lighten } from '@mui/material';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
+const customColors = {
+  brunswickGreen: '#344E41',
+  hunterGreen: '#3A5A40',
+  fernGreen: '#588157',
+  sage: '#A3B18A',
+  timberwolf: '#DAD7CD',
+};
+
 const theme = createTheme({
   components: {
     MuiTableCell: {
@@ -16,17 +24,26 @@ const theme = createTheme({
     MuiTableContainer: {
       styleOverrides: {
         root: {
-          backgroundColor: lighten('#DAD7CD', 0.3), // Example background color
+          backgroundColor: lighten(customColors.timberwolf, 0.3), // Example background color
         },
       },
     },
   },
   palette: {
+    // @ts-ignore
+    customColor: {
+      brunswickGreen: customColors.brunswickGreen,
+      hunterGreen: customColors.hunterGreen,
+      fernGreen: customColors.fernGreen,
+      sage: customColors.sage,
+      timberwolf: customColors.timberwolf,
+    },
     primary: {
-      main: '#3A5A40',
+      main: customColors.hunterGreen,
     },
     background: {
-      default: '#DAD7CD',
+      paper: lighten(customColors.timberwolf, 0.2),
+      default: customColors.timberwolf,
     },
   },
   typography: {
