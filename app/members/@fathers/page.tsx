@@ -24,6 +24,10 @@ async function getFathers() {
       troopId: session.user.troopId,
       father: null,
     },
+    include: {
+      sons: true,
+      parish: true,
+    },
   });
 }
 
@@ -36,14 +40,18 @@ export default async function FathersPage() {
           <TableHead>
             <TableRow>
               <TableCell align={'left'}>Name</TableCell>
-              <TableCell align={'left'}>Role</TableCell>
+              <TableCell align={'left'}>Phone Number</TableCell>
+              <TableCell align={'left'}>Parish</TableCell>
+              <TableCell align={'center'}>Sons</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {fathers.map((father, index) => (
               <TableRow key={index}>
                 <TableCell align={'left'}>{father.name}</TableCell>
-                <TableCell align={'left'}>{father.role}</TableCell>
+                <TableCell align={'left'}>{father.phoneNumber}</TableCell>
+                <TableCell align={'left'}>{father.parish?.name}</TableCell>
+                <TableCell align={'center'}>{father.sons.length}</TableCell>
               </TableRow>
             ))}
           </TableBody>

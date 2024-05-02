@@ -26,6 +26,14 @@ async function getSons() {
         isNot: null,
       },
     },
+    include: {
+      father: {
+        include: {
+          parish: true,
+        },
+      },
+      parish: true,
+    },
   });
 }
 
@@ -38,14 +46,20 @@ export default async function SonsPage() {
           <TableHead>
             <TableRow>
               <TableCell align={'left'}>Name</TableCell>
-              <TableCell align={'left'}>Role</TableCell>
+              <TableCell align={'left'}>Father</TableCell>
+              <TableCell align={'left'}>Parish</TableCell>
+              <TableCell align={'left'}>Patrol</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {sons.map((son, index) => (
               <TableRow key={index}>
                 <TableCell align={'left'}>{son.name}</TableCell>
-                <TableCell align={'left'}>{son.role}</TableCell>
+                <TableCell align={'left'}>{son.father?.name}</TableCell>
+                <TableCell align={'left'}>
+                  {son.parish?.name || son.father?.parish?.name || 'Unknown'}
+                </TableCell>
+                <TableCell align={'left'}>St. Matthew's Angels</TableCell>
               </TableRow>
             ))}
           </TableBody>
