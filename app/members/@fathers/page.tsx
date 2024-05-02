@@ -12,6 +12,7 @@ import {
 } from '@mui/material';
 
 async function getFathers() {
+  console.log('getting fathers');
   const session = await getServerSession(authOptions);
 
   if (!session) {

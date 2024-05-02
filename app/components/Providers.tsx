@@ -1,10 +1,34 @@
 'use client';
 
-import { ThemeProvider, createTheme } from '@mui/material';
+import { ThemeProvider, createTheme, lighten } from '@mui/material';
 import { SessionProvider } from 'next-auth/react';
 import { ReactNode } from 'react';
 
 const theme = createTheme({
+  components: {
+    MuiTableCell: {
+      styleOverrides: {
+        head: {
+          fontWeight: 'bold',
+        },
+      },
+    },
+    MuiTableContainer: {
+      styleOverrides: {
+        root: {
+          backgroundColor: lighten('#DAD7CD', 0.3), // Example background color
+        },
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: '#3A5A40',
+    },
+    background: {
+      default: '#DAD7CD',
+    },
+  },
   typography: {
     fontSize: 14,
     h1: {

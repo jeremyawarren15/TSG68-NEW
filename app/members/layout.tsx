@@ -24,7 +24,7 @@ export default function MembersLayout({ fathers, sons }: Props) {
 
   return (
     <>
-      <Tabs value={selectedTab} onChange={handleChange}>
+      <Tabs sx={{ mt: 2 }} value={selectedTab} onChange={handleChange}>
         <Tab label="Fathers" {...a11yProps(0)} />
         <Tab label="Sons" {...a11yProps(1)} />
       </Tabs>

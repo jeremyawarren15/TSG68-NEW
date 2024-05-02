@@ -17,34 +17,31 @@ import {
   ListItemText,
   ClickAwayListener,
 } from '@mui/material';
-import { Dashboard, Help, Inbox, Mail } from '@mui/icons-material';
+import { Dashboard, Groups, Help, Inbox, Mail } from '@mui/icons-material';
 import { signIn, useSession } from 'next-auth/react';
 import SigninButton from './SignInButton';
+import NavListItem from './NavListItem';
 
 interface DrawerListItem {
   name: string;
   icon: ReactNode;
+  route: string;
 }
 
 export default function ButtonAppBar() {
   const [open, setOpen] = useState(false);
-  const { data: session, status } = useSession();
 
   const list: DrawerListItem[] = [
-    { name: 'Dashboard', icon: <Dashboard /> },
-    { name: 'FAQ', icon: <Help /> },
+    { name: 'Dashboard', icon: <Dashboard />, route: '/' },
+    { name: 'Members', icon: <Groups />, route: '/members' },
+    { name: 'FAQ', icon: <Help />, route: '/faq' },
   ];
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={() => setOpen(false)}>
       <List>
-        {list.map(({ name, icon }, index) => (
-          <ListItem key={name} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={name} />
-            </ListItemButton>
-          </ListItem>
+        {list.map(({ name, icon, route }, index) => (
+          <NavListItem key={index} name={name} icon={icon} route={route} />
         ))}
       </List>
     </Box>
