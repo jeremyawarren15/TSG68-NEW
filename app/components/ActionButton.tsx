@@ -1,19 +1,20 @@
 'use client';
 import { Zoom, Fab } from '@mui/material';
 import { Add } from '@mui/icons-material';
-import { useState, MouseEventHandler } from 'react';
+import { MouseEventHandler } from 'react';
+import Link from 'next/link';
 
 interface Props {
   show: boolean | undefined;
-  handleClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function ActionButton({ show, handleClick }: Props) {
+export default function ActionButton({ show }: Props) {
   return (
     <Zoom in={show}>
       <Fab
+        LinkComponent={Link}
+        href="/members/create"
         color="primary"
-        onClick={handleClick}
         sx={{ position: 'absolute', bottom: 20, right: 20 }}
       >
         <Add />

@@ -4,9 +4,10 @@ import ActionButton from '../components/ActionButton';
 import FathersPage from './fathers';
 import SonsPage from './sons';
 import Link from 'next/link';
+import SearchParams from '@/types/SearchParams';
 
 interface Props {
-  searchParams: { [key: string]: string | string[] | undefined };
+  searchParams: SearchParams;
 }
 
 function a11yProps(index: number) {
@@ -22,12 +23,7 @@ export default async function MembersPage({ searchParams }: Props) {
 
   return (
     <>
-      <h1>Members Page</h1>
-      <Tabs
-        sx={{ mt: 2 }}
-        value={selectedTab}
-        // onChange={(e, value) => setSelectedTab(value)}
-      >
+      <Tabs sx={{ mt: 2 }} value={selectedTab}>
         <Tab
           LinkComponent={Link}
           href={`?tab=0`}
@@ -47,10 +43,7 @@ export default async function MembersPage({ searchParams }: Props) {
       <CustomTabPanel value={selectedTab} index={1}>
         <SonsPage />
       </CustomTabPanel>
-      <ActionButton
-        show={true}
-        // handleClick={() => router.push('/users/create')}
-      />
+      <ActionButton show={true} />
     </>
   );
 }
