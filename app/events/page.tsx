@@ -1,36 +1,17 @@
-import { authOptions } from '@/lib/authOptions';
-import { prisma } from '@/prisma/prisma';
-import { Prisma } from '@prisma/client';
-import { getServerSession } from 'next-auth';
-import EventsTable from '../components/EventsTable';
-import Heading from '../components/Heading';
-
-async function getEvents() {
-  const session = await getServerSession(authOptions);
-
-  if (!session) {
-    throw new Error('You need to be authenticated to view this page.');
-  }
-
-  return await prisma.event.findMany({
-    where: {
-      troopId: session.user.troopId,
-    },
-    orderBy: {
-      startDate: Prisma.SortOrder.asc,
-    },
-  });
-}
+import { getEvents } from '../actions/eventActions';
+import { Grid, Stack } from '@mui/material';
+import EventCard from '../components/EventCard';
 
 export default async function EventsPage() {
   const events = await getEvents();
 
   return (
-    <div>
-      <Heading>Events</Heading>
-      <div className="bg-base-200 shadow rounded-md">
-        <EventsTable events={events} />
-      </div>
-    </div>
+    <Grid container gap={2} sx={{ mt: 2 }}>
+      {events.map((event) => (
+        <Grid key={event.id} item xs={12} sm={6} md={4}>
+          <EventCard event={event} />
+        </Grid>
+      ))}
+    </Grid>
   );
 }

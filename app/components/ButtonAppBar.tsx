@@ -17,7 +17,14 @@ import {
   ListItemText,
   ClickAwayListener,
 } from '@mui/material';
-import { Dashboard, Groups, Help, Inbox, Mail } from '@mui/icons-material';
+import {
+  CalendarMonth,
+  Dashboard,
+  Groups,
+  Help,
+  Inbox,
+  Mail,
+} from '@mui/icons-material';
 import { signIn, useSession } from 'next-auth/react';
 import SigninButton from './SignInButton';
 import NavListItem from './NavListItem';
@@ -33,6 +40,7 @@ export default function ButtonAppBar() {
 
   const list: DrawerListItem[] = [
     { name: 'Dashboard', icon: <Dashboard />, route: '/' },
+    { name: 'Events', icon: <CalendarMonth />, route: '/events' },
     { name: 'Members', icon: <Groups />, route: '/members' },
     { name: 'FAQ', icon: <Help />, route: '/faq' },
   ];

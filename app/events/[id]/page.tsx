@@ -1,29 +1,7 @@
+import { getEvent } from '@/app/actions/eventActions';
 import Heading from '@/app/components/Heading';
-import { authOptions } from '@/lib/authOptions';
-import { prisma } from '@/prisma/prisma';
 import { marked } from 'marked';
-import { getServerSession } from 'next-auth';
 import Link from 'next/link';
-
-async function getEvent(eventId: string) {
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    throw new Error('You need to be authenticated to view this page.');
-  }
-
-  const event = await prisma.event.findUnique({
-    where: {
-      id: eventId,
-      troopId: session.user.troopId,
-    },
-  });
-
-  if (!event) {
-    throw new Error('Event not found.');
-  }
-
-  return event;
-}
 
 export default async function EventPage({
   params,
