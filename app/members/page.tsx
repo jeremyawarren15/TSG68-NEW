@@ -43,7 +43,7 @@ export default async function MembersPage({ searchParams }: Props) {
       <CustomTabPanel value={selectedTab} index={1}>
         <SonsPage />
       </CustomTabPanel>
-      <ActionButton show={true} />
+      <ActionButton show={true} link="/members/create" />
     </>
   );
 }
