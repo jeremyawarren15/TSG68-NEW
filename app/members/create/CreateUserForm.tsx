@@ -2,6 +2,7 @@
 import { useQuery } from 'react-query';
 import {
   Box,
+  Button,
   Grid,
   TextField,
   Paper,
@@ -15,6 +16,7 @@ import { useRouter } from 'next/navigation';
 import { getFathers } from './actions';
 import { User } from '@prisma/client';
 import SearchParams from '@/types/SearchParams';
+import Link from 'next/link';
 
 interface Props {
   fathers: User[];
@@ -82,6 +84,12 @@ export default function CreateUserForm({ fathers }: Props) {
                 ))}
               </Select>
             </FormControl>
+          </Grid>
+          <Grid item display={'flex'} gap={1}>
+            <Button variant="contained">Create</Button>
+            <Button LinkComponent={Link} href="/members" variant="outlined">
+              Cancel
+            </Button>
           </Grid>
         </Grid>
       </Box>
