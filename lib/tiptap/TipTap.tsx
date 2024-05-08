@@ -3,11 +3,19 @@ import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import { Editor } from '@tiptap/core';
 import { useState } from 'react';
 import StarterKit from '@tiptap/starter-kit';
+import CustomHeading from './CustomHeading';
 
 export default function Tiptap({ content }: { content: string }) {
   const [editorValue, setEditorValue] = useState(content);
   const editor = useEditor({
-    extensions: [StarterKit],
+    extensions: [
+      StarterKit.configure({
+        heading: false,
+      }),
+      CustomHeading.configure({
+        levels: [1, 2, 3, 4, 5, 6],
+      }),
+    ],
     onUpdate: ({ editor }) => {
       handleEditorChange(editor);
     },

@@ -1,4 +1,4 @@
-import Tiptap from '@/app/components/TipTap';
+import Tiptap from '@/lib/tiptap/TipTap';
 import { prisma } from '@/prisma/prisma';
 import { getEvent } from '@/app/actions';
 import { redirect } from 'next/navigation';

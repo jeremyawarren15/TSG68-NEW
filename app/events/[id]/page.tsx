@@ -1,5 +1,6 @@
 import { getEvent } from '@/app/actions/eventActions';
-import Heading from '@/app/components/Heading';
+import transformHtmlToMui from '@/lib/transformHtmlToMui';
+import { Box, Button, Divider, Stack, Typography } from '@mui/material';
 import { marked } from 'marked';
 import Link from 'next/link';
 
@@ -10,17 +11,19 @@ export default async function EventPage({
 }) {
   const event = await getEvent(params.id);
   return (
-    <div>
-      <div className="flex gap-2">
-        <Heading>{event.name}</Heading>
-        <Link href={`/events/${params.id}/edit`}>
-          <button className="btn btn-link">Edit</button>
-        </Link>
-      </div>
-      <div className="divider" />
-      <div className="prose dark:prose-invert prose-sm sm:prose-base lg:prose-lg xl:prose-2xl">
-        <div dangerouslySetInnerHTML={{ __html: marked(event.content) }}></div>
-      </div>
-    </div>
+    <Box sx={{ mt: 2 }}>
+      <Stack direction="row" alignItems="center" gap={2} mb={2}>
+        <Typography variant="h1">{event.name}</Typography>
+        <Button
+          variant="contained"
+          LinkComponent={Link}
+          href={`/events/${params.id}/edit`}
+        >
+          Edit
+        </Button>
+      </Stack>
+      <Divider />
+      <div>{transformHtmlToMui(event.content)}</div>
+    </Box>
   );
 }
