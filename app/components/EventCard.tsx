@@ -19,7 +19,16 @@ export default async function EventCard({
 }: Props) {
   return (
     <Box>
-      <Card variant="outlined">
+      <Card
+        sx={{
+          transition: 'transform 0.2s, box-shadow 0.2s',
+          '&:hover': {
+            transform: 'translateY(-5px)',
+            boxShadow: 2,
+          },
+        }}
+        variant="outlined"
+      >
         <CardContent>
           <Typography gutterBottom>{name}</Typography>
           <Typography color="text.secondary">
