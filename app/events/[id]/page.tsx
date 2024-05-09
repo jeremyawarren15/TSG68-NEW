@@ -72,10 +72,7 @@ export default async function EventPage({
                   <ExploreIcon />
                 </Avatar>
               </ListItemAvatar>
-              <ListItemText
-                primary="Location"
-                secondary={event.endDate.toLocaleString()}
-              />
+              <ListItemText primary="Location" secondary="The Woods" />
             </ListItem>
           </List>
         </Paper>
