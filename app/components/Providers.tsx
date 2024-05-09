@@ -14,6 +14,13 @@ const customColors = {
 
 const theme = createTheme({
   components: {
+    MuiAvatar: {
+      styleOverrides: {
+        root: {
+          backgroundColor: customColors.sage,
+        },
+      },
+    },
     MuiTableCell: {
       styleOverrides: {
         head: {

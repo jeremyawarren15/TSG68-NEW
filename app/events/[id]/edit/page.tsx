@@ -2,6 +2,7 @@ import Tiptap from '@/lib/tiptap/TipTap';
 import { prisma } from '@/prisma/prisma';
 import { getEvent } from '@/app/actions';
 import { redirect } from 'next/navigation';
+import { Button, Paper, TextField } from '@mui/material';
 
 async function saveEvent(formData: FormData) {
   'use server';
@@ -27,20 +28,20 @@ export default async function EventEditPage({
 
   return (
     <form action={saveEvent}>
-      <div className="label">
-        <span className="label-text">Title</span>
-      </div>
       <input name="id" type="hidden" value={event.id} />
-      <input
+      <TextField
+        sx={{ my: 2 }}
         name="name"
-        type="text"
+        label="Name"
+        variant="outlined"
         defaultValue={event.name}
-        className="input input-bordered w-full max-w-xs"
       />
-      <div className="divider" />
-      <Tiptap content={event.content} />
-      <div className="divider" />
-      <button className="btn btn-primary">Save Changes</button>
+      <Paper sx={{ p: 3, mb: 2 }}>
+        <Tiptap content={event.content} />
+      </Paper>
+      <Button variant="contained" type="submit">
+        Save Event
+      </Button>
     </form>
   );
 }

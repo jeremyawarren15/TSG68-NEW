@@ -1,9 +1,11 @@
 'use client';
+
 import { useEditor, EditorContent, BubbleMenu } from '@tiptap/react';
 import { Editor } from '@tiptap/core';
-import { useState } from 'react';
+import { MouseEventHandler, useState } from 'react';
 import StarterKit from '@tiptap/starter-kit';
 import CustomHeading from './CustomHeading';
+import { Button } from '@mui/material';
 
 export default function Tiptap({ content }: { content: string }) {
   const [editorValue, setEditorValue] = useState(content);
@@ -32,52 +34,48 @@ export default function Tiptap({ content }: { content: string }) {
     setEditorValue(editor.getHTML());
   };
 
-  const buttonStyles = (
-    element: string,
-    attributes?: { level: number } | undefined
-  ) => {
-    const style = 'p-1 border rounded mx-1';
-    const active = editor?.isActive(element, attributes);
+  interface Props {
+    onClick: MouseEventHandler<HTMLButtonElement> | undefined;
+    text: string;
+  }
 
-    return style + (active ? ' bg-gray-400' : ' bg-gray-300');
-  };
+  const B = ({ onClick, text }: Props) => (
+    <Button
+      variant="contained"
+      size="small"
+      onClick={onClick}
+      sx={{ m: 0.25, p: 1, fontSize: '.6rem' }}
+    >
+      {text}
+    </Button>
+  );
 
   return (
     <>
       {editor && (
         <BubbleMenu editor={editor} tippyOptions={{ duration: 100 }}>
-          <button
+          <B
+            text="list"
             onClick={() => editor.chain().focus().toggleBulletList().run()}
-            className={buttonStyles('ul')}
-          >
-            list
-          </button>
-          <button
+          />
+          <B
+            text="heading"
             onClick={() =>
               editor.chain().focus().toggleHeading({ level: 2 }).run()
             }
-            className={buttonStyles('heading', { level: 2 })}
-          >
-            heading
-          </button>
-          <button
+          />
+          <B
+            text="bold"
             onClick={() => editor.chain().focus().toggleBold().run()}
-            className={buttonStyles('bold')}
-          >
-            bold
-          </button>
-          <button
+          />
+          <B
+            text="italic"
             onClick={() => editor.chain().focus().toggleItalic().run()}
-            className={buttonStyles('italic')}
-          >
-            italic
-          </button>
-          <button
+          />
+          <B
+            text="strike"
             onClick={() => editor.chain().focus().toggleStrike().run()}
-            className={buttonStyles('strike')}
-          >
-            strike
-          </button>
+          />
         </BubbleMenu>
       )}
       <EditorContent editor={editor} />

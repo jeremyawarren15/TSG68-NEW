@@ -17,6 +17,9 @@ export default function RootLayout({
     <Provider>
       <CssBaseline />
       <html lang="en">
+        <head>
+          <title>TSG68</title>
+        </head>
         <body>
           <ButtonAppBar />
           <Container>{children}</Container>
